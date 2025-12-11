@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Battle Grounds Showdown (BGS) – UK Online Fighting Game Tournaments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Battle Grounds Showdown (BGS) – UK online fighting game tournaments for Tekken, Street Fighter and Mortal Kombat. Join the dojo and compete weekly." />
+
+  <style>
+    :root {
+      --bg-dark: #05060a;
+      --bg-panel: #0b0c13;
+      --accent-blue: #1f8bff;
+      --accent-red: #d81e24;
+      --text-main: #ffffff;
+      --text-muted: #b3bfd4;
+      --border-soft: #141622;
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.7);
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111628 0, #05060a 55%, #020308 100%);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: linear-gradient(to bottom, rgba(5,6,10,0.98), rgba(5,6,10,0.9), transparent);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--accent-blue);
+      box-shadow: 0 0 12px rgba(31,139,255,0.7);
+    }
+
+    .nav-title {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 0.1rem;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-red));
+      transition: width 0.2s ease-out;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background 0.15s ease-out;
+      background: radial-gradient(circle at top left, rgba(31,139,255,0.18), rgba(216,30,36,0.05));
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    .btn-primary {
+      border: none;
+      background: linear-gradient(120deg, var(--accent-blue), var(--accent-red));
+      box-shadow: 0 0 25px rgba(31,139,255,0.6);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3.5rem;
+    }
+
+    /* Hero */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .hero-kicker {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      margin-bottom: 0.55rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4vw, 2.9rem);
+      line-height: 1.1;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(120deg, var(--accent-blue), var(--accent-red));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      color: var(--text-muted);
+      max-width: 32rem;
+      font-size: 0.98rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-meta .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      box-shadow: 0 0 12px rgba(216,30,36,0.9);
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top, #141629, #060710 60%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 1.5rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0.32;
+      background:
+        radial-gradient(circle at 10% 0, rgba(31,139,255,0.35), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(216,30,36,0.32), transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-card h2 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(2,3,8,0.65);
+    }
+
+    .hero-logo-wrap {
+      width: 170px;
+      margin: 0 auto 0.6rem;
+      filter: drop-shadow(0 0 22px rgba(10,190,255,0.7));
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card-footer strong {
+      color: var(--text-main);
+    }
+
+    /* Sections */
+
+    section {
+      margin-top: 3.5rem;
+    }
+
+    .section-heading {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 30rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-panel);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.1rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(15,21,40,0.9);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-muted);
+    }
+
+    .pill span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 1rem;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent-blue), var(--accent-red));
+      opacity: 0.7;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 2.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 2px;
+      top: 0.2rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-dark);
+      background: radial-gradient(circle, var(--accent-blue), var(--accent-red));
+      box-shadow: 0 0 12px rgba(31,139,255,0.7);
+    }
+
+    .timeline-item h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-item p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .faq-item h3 {
+      font-size: 0.94rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .faq-item p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 1.8rem 1.5rem 2.2rem;
+      margin-top: 2.5rem;
+      background: radial-gradient(circle at top, #111628 0, #05060a 45%, #020308 100%);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .hero-card {
+        order: -1;
+      }
+      nav ul {
+        display: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      main {
+        padding-inline: 1.1rem;
+      }
+      .grid-3 {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .faq-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <!-- Put your logo file in the same folder as this HTML -->
+          <img src="BGS_logoV4.png" alt="Battle Grounds Showdown logo" />
+        </div>
+        <div class="nav-title">Battle Grounds Showdown</div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#tournaments">Tournaments</a></li>
+          <li><a href="#join">Join</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-primary" href="#join">Join Discord</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div>
+        <div class="hero-kicker">UK · Online · Fighting Game Series</div>
+        <h1>
+          Enter the <span>Battle Grounds Showdown</span>
+        </h1>
+        <p class="hero-sub">
+          Weekly online tournaments for <strong>Tekken 8</strong>, <strong>Street Fighter 6</strong> and
+          <strong>Mortal Kombat 1</strong>. UK-based, prize-supported, community-driven.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#join">Join the Dojo</a>
+          <a class="btn" href="#tournaments">View Upcoming Brackets</a>
+        </div>
+
+        <div class="hero-meta">
+          <span><span class="dot"></span> £50+ prize pool events</span>
+          <span>UK &amp; Ireland · Online only</span>
+          <span>Beginner-friendly + competitive</span>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="hero-card-inner">
+          <div class="hero-badge">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--accent-blue);"></span>
+            Next Event
+          </div>
+          <h2>BGS Weekly – Online Fight Night</h2>
+          <p>
+            Double elimination, FT2 (FT3 for Top 3), streamed Top 8 and full Discord support.
+          </p>
+
+          <div class="hero-tags">
+            <div class="tag">Tekken 8</div>
+            <div class="tag">Street Fighter 6</div>
+            <div class="tag">Mortal Kombat 1</div>
+            <div class="tag">UK &amp; Ireland</div>
+          </div>
+
+          <div class="hero-logo-wrap">
+            <img src="BGS_logoV4.png" alt="BGS emblem" />
+          </div>
+
+          <div class="hero-card-footer">
+            <div>
+              <strong>Every Tuesday · 7PM (UK)</strong><br />
+              Check-in opens 30 minutes before bracket start.
+            </div>
+            <div>
+              <strong>Platform</strong><br />
+              PS5 / PC (crossplay where supported)
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-heading">What is BGS?</h2>
+      <p class="section-sub">
+        Battle Grounds Showdown is a UK-focused online tournament series designed for both
+        seasoned competitors and players entering their first bracket. We combine clean
+        production, fair rules and an active Discord community.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Competitive, but welcoming</h3>
+          <p>
+            Clear rules, friendly staff and beginner brackets ensure new players can learn without being
+            overwhelmed. Regulars enjoy a stable, high-level environment.
+          </p>
+          <div class="pill"><span></span> community first</div>
+        </div>
+
+        <div class="card">
+          <h3>Weekly online tournaments</h3>
+          <p>
+            Consistent schedule so you always know when to play. Earn points towards the BGS Season Leaderboard and qualify for special finals events.
+          </p>
+          <div class="pill"><span></span> weekly series</div>
+        </div>
+
+        <div class="card">
+          <h3>Streamed &amp; highlight ready</h3>
+          <p>
+            Top matches are streamed and clipped. Share your best moments on social media and start
+            building your own highlight reel from BGS sets.
+          </p>
+          <div class="pill"><span></span> live production</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOURNAMENTS -->
+    <section id="tournaments">
+      <h2 class="section-heading">Tournaments &amp; Formats</h2>
+      <p class="section-sub">
+        All events run through Start.gg with Discord coordination. Simple, fair formats across Tekken 8, Street Fighter 6 and Mortal Kombat 1.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Tekken 8 – Iron Fist Fridays</h3>
+          <p>
+            Double elimination, FT2 until Top 3, FT3 for finals. Random stage, winner locked to character, loser may switch.
+          </p>
+          <p><strong>Skill level:</strong> Open – beginners welcome.</p>
+        </div>
+
+        <div class="card">
+          <h3>Street Fighter 6 – Ranked Rumble</h3>
+          <p>
+            Modern or Classic controls allowed. FT2 sets, FT3 Top 3. Stable connections required, lag disputes handled by staff.
+          </p>
+          <p><strong>Skill level:</strong> Open – casual to competitive.</p>
+        </div>
+
+        <div class="card">
+          <h3>Mortal Kombat 1 – Outworld Clash</h3>
+          <p>
+            Kameos legal, exploit bans enforced. FT2 into FT3 finals. Fatal hype encouraged, disrespect optional.
+          </p>
+          <p><strong>Skill level:</strong> Open – newcomers encouraged.</p>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <h4>1. Register on Start.gg</h4>
+          <p>
+            Choose your game, sign up on Start.gg and join the BGS Discord using the link below.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <h4>2. Check-in on event day</h4>
+          <p>
+            Check-in opens 30 minutes before bracket start. Confirm you are ready in the <em>#check-in</em> channel.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <h4>3. Fight through the bracket</h4>
+          <p>
+            Find opponents via Discord, play your matches, and report scores in <em>#match-reporting</em>.
+          </p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <h4>4. Watch the stream</h4>
+          <p>
+            If your match is called for stream, wait for the signal from staff and then put on a show for chat.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN -->
+    <section id="join">
+      <h2 class="section-heading">Join the Dojo</h2>
+      <p class="section-sub">
+        Get bracket links, announcements and match support in our Discord. It’s free to join – you only pay entry for the tournaments you play.
+      </p>
+
+      <div class="card" style="display:flex;flex-wrap:wrap;align-items:center;gap:1.4rem;justify-content:space-between;">
+        <div>
+          <h3>Step into the Battle Grounds</h3>
+          <p>
+            Click the button below to join the BGS Discord. Once inside, head to <strong>#welcome</strong> and pick your game roles to be pinged for upcoming events.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.75rem;">
+            <!-- TODO: Replace links with your real URLs -->
+            <a class="btn btn-primary" href="https://discord.gg/your-invite-here" target="_blank" rel="noopener">Join Discord</a>
+            <a class="btn" href="https://www.start.gg" target="_blank" rel="noopener">View BGS on Start.gg</a>
+          </div>
+        </div>
+        <div style="min-width:220px;max-width:260px;">
+          <div class="card" style="background:radial-gradient(circle at top,#10172c,#060814);box-shadow:0 0 30px rgba(0,0,0,0.9);">
+            <h3 style="margin-bottom:0.35rem;">Community Snapshot</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.7rem;">
+              • Weekly events<br />
+              • UK &amp; Ireland players<br />
+              • Beginner friendly rooms<br />
+              • Highlight clips &amp; VODs
+            </p>
+            <div class="pill"><span></span> growing every season</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <h2 class="section-heading">FAQ</h2>
+      <p class="section-sub">
+        Common questions about Battle Grounds Showdown. For anything else, ask in <strong>#tournament-help</strong> once you join Discord.
+      </p>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Who can enter?</h3>
+          <p>
+            Our events are focused on players in the UK &amp; Ireland to keep connections stable.
+            If you are nearby in EU and have a good connection, staff may allow you at their discretion.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>What do I need to play?</h3>
+          <p>
+            A copy of the relevant game, online access, a stable wired or strong Wi-Fi connection, and a Discord account to receive lobby details and report scores.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Is there an entry fee?</h3>
+          <p>
+            Standard weekly tournaments have a small entry fee to fund the prize pool and production. Some beginner or community nights may be free-to-enter.
+          </p>
+        </div>
+        <div class="faq-item">
+          <h3>Can beginners join?</h3>
+          <p>
+            Yes. We actively encourage new players and regularly host beginner-friendly brackets and training sessions with more experienced community members.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Battle Grounds Showdown · BGS</div>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+        <a href="#join">Join Discord</a>
+        <a href="#faq">Rules &amp; FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
